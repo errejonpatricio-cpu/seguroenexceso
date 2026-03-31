@@ -72,7 +72,7 @@ export default function Home() {
           cal.loaded = true
         }
         if (args[0] === "init") {
-          const api = function(...apiArgs: any[]) { api.q.push(apiArgs) }
+          const api: any = function(...apiArgs: any[]) { api.q.push(apiArgs) }
           api.q = api.q || []
           const namespace = args[1]
           if (typeof namespace === "string") {
