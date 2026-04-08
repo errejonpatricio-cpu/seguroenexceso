@@ -463,35 +463,36 @@ export default function Home() {
       </section>
 
       {/* SECTION 9 — FAQ */}
-      <section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-24">
-        <div className="max-w-4xl mx-auto">
-          <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#0a1a3a" }}>FAQ</h2>
-            <p className="mb-10 text-base" style={{ color: "#64748b" }}>Preguntas frecuentes sobre el Seguro en Exceso</p>
-          </AnimatedSection>
-          <AnimatedSection delay={100}>
-            <Accordion type="single" collapsible className="w-full space-y-3">
-              {[
-                { q: "Mi póliza de grupo ya tiene cláusula de conversión, ¿para qué necesito una póliza en exceso?", a: "La cláusula de conversión solo te permite salir del seguro colectivo y pasar a una póliza individual con los mismos términos — la misma suma asegurada, sin más. La póliza en exceso hace algo distinto: suma protección adicional hoy, mientras sigues en la empresa, y se convierte en tu póliza principal el día que la necesites." },
-                { q: "Mi póliza colectiva no es de MAPFRE, ¿aún así puedo contratar?", a: "Sí. La póliza en exceso funciona como complemento de cualquier seguro de grupo, sin importar qué aseguradora lo opera." },
-                { q: "¿Cuándo recibo mi póliza?", a: "En menos de 24 horas después de completar tu cotización y cuestionario médico — siempre que no se requieran estudios adicionales. Todo por correo electrónico." },
-                { q: "¿Cómo hago una reclamación con mi póliza en exceso?", a: "El proceso es en dos capas: primero se atiende el siniestro con tu seguro de empresa hasta su límite. Si el gasto lo supera, tu póliza en exceso se activa como segunda capa, siguiendo el procedimiento de reclamación de MAPFRE. EB&A te acompaña en cada paso." },
-                { q: "¿Qué pasa con mi antigüedad al salir de la empresa?", a: "Tu antigüedad puede reconocerse al hacer la transición del seguro colectivo a la póliza en exceso, ayudando a evitar o reducir periodos de espera y manteniendo la continuidad de tu cobertura — sin empezar de cero. Esto depende del diseño específico de tu póliza." },
-                { q: "¿Las preexistencias están cubiertas?", a: "No. Un padecimiento diagnosticado antes de contratar sigue siendo preexistencia y no está cubierto. Por eso el momento ideal para contratar es ahora, mientras estás sano: todo lo que aparezca después de la contratación se puede quedar cubierto, ya sea dentro o fuera de tu póliza colectiva." },
-                { q: "¿EB&A es lo mismo que MAPFRE?", a: "No. EB&A es tu broker: te asesora, gestiona tu póliza y te acompaña en todo el proceso. MAPFRE es la aseguradora que emite y respalda tu póliza. Roles distintos, equipo completo." },
-                { q: "¿Cuál es el mejor momento para contratar?", a: "Ahora. La póliza en exceso se contrata con salud, no cuando ya hay un diagnóstico. Entre más pronto la tengas, más completa y accesible es tu protección." },
-                { q: "¿Qué pasa si nunca la uso?", a: "Es como el cinturón de seguridad: esperas no necesitarlo nunca. Pero si algún día tu cuenta hospitalaria supera la suma asegurada de tu empresa, tu póliza en exceso protege tu patrimonio. Esa tranquilidad no tiene precio." },
-                { q: "¿Qué pasa si mi empresa cambia de aseguradora?", a: "En la mayoría de los casos, tu póliza en exceso puede seguir operando sobre el nuevo seguro de grupo sin perder continuidad. Cuando eso ocurre, EB&A revisa el nuevo plan y ajusta la estructura si es necesario." },
-              ].map(({ q, a }, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md" style={{ border: "1px solid #e2e8f0" }}>
-                  <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>{q}</AccordionTrigger>
-                  <AccordionContent className="text-sm leading-relaxed px-6 pb-4" style={{ color: "#475569" }}>{a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </AnimatedSection>
-        </div>
-      </section>
+<section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-24">
+  <div className="max-w-4xl mx-auto">
+    <AnimatedSection>
+      <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#0a1a3a" }}>FAQ</h2>
+      <p className="mb-10 text-base" style={{ color: "#64748b" }}>Preguntas frecuentes sobre el Seguro en Exceso</p>
+    </AnimatedSection>
+    <AnimatedSection delay={100}>
+      <Accordion type="single" collapsible className="w-full space-y-3">
+        {[
+          { q: "Mi póliza de grupo ya tiene cláusula de conversión, ¿para qué necesito una póliza en exceso?", a: "La cláusula de conversión solo te permite salir del seguro colectivo y pasar a una póliza individual con los mismos términos y condiciones, es decir la misma suma asegurada. La póliza en exceso hace algo distinto: suma protección adicional hoy, mientras sigues en la empresa, y se convierte en tu póliza principal el día que la necesites." },
+          { q: "Mi póliza colectiva no es de MAPFRE, ¿aún así puedo contratar?", a: "Sí. La póliza en exceso funciona como complemento de cualquier seguro de grupo, sin importar qué aseguradora lo opera." },
+          { q: "¿Cuándo recibo mi póliza?", a: "En menos de 24 horas después de completar tu cotización y cuestionario médico — siempre que no se requieran estudios adicionales. Todo por correo electrónico." },
+          { q: "¿Cómo hago una reclamación con mi póliza en exceso?", a: "El proceso es en dos capas: primero se atiende el siniestro con tu seguro de empresa hasta su límite. Si el gasto lo supera, tu póliza en exceso se activa como segunda capa, siguiendo el procedimiento de reclamación de MAPFRE. EB&A te acompaña en cada paso." },
+          { q: "¿Qué pasa con mi antigüedad al salir de la empresa?", a: "Tu antigüedad se respeta desde hoy que contratas tu póliza en exceso. Solo necesitamos tu certificado de antigüedad actual para tramitarlo." },
+          { q: "¿Las preexistencias están cubiertas?", a: "No. Un padecimiento diagnosticado antes de contratar sigue siendo preexistencia y no está cubierto. Por eso el momento ideal para contratar es ahora, mientras estás sano: todo lo que aparezca después de la contratación se queda cubierto, ya sea dentro o fuera de tu póliza colectiva." },
+          { q: "¿EB&A es lo mismo que MAPFRE?", a: "No. EB&A es tu broker: te asesora, gestiona tu póliza y te acompaña en todo el proceso. MAPFRE es la aseguradora que emite y respalda tu póliza. Roles distintos, equipo completo." },
+          { q: "¿A quién pago las primas?", a: "El pago se realiza directamente a MAPFRE mediante sus comprobantes de pago oficiales." },
+          { q: "¿Cuál es el mejor momento para contratar?", a: "Ahora. La póliza en exceso se contrata con salud, no cuando ya hay un diagnóstico. Entre más pronto la tengas, más completa y accesible es tu protección." },
+          { q: "¿Qué pasa si nunca la uso?", a: "Es como el cinturón de seguridad: esperas no necesitarlo nunca. Pero si algún día tu cuenta hospitalaria supera la suma asegurada de tu empresa, tu póliza en exceso protege tu patrimonio. Esa tranquilidad no tiene precio." },
+          { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo" },
+        ].map(({ q, a }, i) => (
+          <AccordionItem key={i} value={`item-${i}`} className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md" style={{ border: "1px solid #e2e8f0" }}>
+            <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>{q}</AccordionTrigger>
+            <AccordionContent className="text-sm leading-relaxed px-6 pb-4" style={{ color: "#475569" }}>{a}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </AnimatedSection>
+  </div>
+</section>
 
       {/* SECTION 10 — CAL.COM */}
       <section id="calendly" style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
