@@ -220,7 +220,7 @@ export default function Home() {
           </AnimatedSection>
           <div className="grid gap-4">
             {[
-              "Tienes entre 25 y 65 años",
+              "Tienes entre 25 y 55 años",
               "Formas parte de la póliza colectiva de tu empresa",
               "Te encuentras en buen estado de salud, sin enfermedades crónicas*",
             ].map((item, i) => (
@@ -261,7 +261,7 @@ export default function Home() {
             <div className="text-center mb-12">
               <p className="text-lg uppercase tracking-widest mb-3 font-semibold" style={{ color: "#1565c0" }}>Protección completa</p>
               <h2 className="text-3xl md:text-4xl font-bold" style={{ color: "#0a1a3a" }}>Coberturas del Seguro en Exceso</h2>
-              <p className="text-base mt-4 max-w-2xl mx-auto" style={{ color: "#64748b" }}>Tu póliza incluye coberturas estándar y opciones personalizables para adaptarse a tus necesidades.</p>
+              <p className="text-base mt-4 max-w-2xl mx-auto" style={{ color: "#64748b" }}>Puedes contratar hasta 130 Millones de pesos de Suma Asegurada.</p>
             </div>
           </AnimatedSection>
           <div className="grid md:grid-cols-2 gap-8">
@@ -479,10 +479,10 @@ export default function Home() {
           { q: "¿Qué pasa con mi antigüedad al salir de la empresa?", a: "Tu antigüedad se respeta desde hoy que contratas tu póliza en exceso. Solo necesitamos tu certificado de antigüedad actual para tramitarlo." },
           { q: "¿Las preexistencias están cubiertas?", a: "No. Un padecimiento diagnosticado antes de contratar sigue siendo preexistencia y no está cubierto. Por eso el momento ideal para contratar es ahora, mientras estás sano: todo lo que aparezca después de la contratación se queda cubierto, ya sea dentro o fuera de tu póliza colectiva." },
           { q: "¿EB&A es lo mismo que MAPFRE?", a: "No. EB&A es tu broker: te asesora, gestiona tu póliza y te acompaña en todo el proceso. MAPFRE es la aseguradora que emite y respalda tu póliza. Roles distintos, equipo completo." },
-          { q: "¿A quién pago las primas?", a: "El pago se realiza directamente a MAPFRE mediante sus comprobantes de pago oficiales." },
+          { q: "¿A quién pago las primas?", a: "El pago se realiza directamente a MAPFRE mediante sus conductos de cobro oficiales." },
           { q: "¿Cuál es el mejor momento para contratar?", a: "Ahora. La póliza en exceso se contrata con salud, no cuando ya hay un diagnóstico. Entre más pronto la tengas, más completa y accesible es tu protección." },
           { q: "¿Qué pasa si nunca la uso?", a: "Es como el cinturón de seguridad: esperas no necesitarlo nunca. Pero si algún día tu cuenta hospitalaria supera la suma asegurada de tu empresa, tu póliza en exceso protege tu patrimonio. Esa tranquilidad no tiene precio." },
-          { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo" },
+          { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo." },
         ].map(({ q, a }, i) => (
           <AccordionItem key={i} value={`item-${i}`} className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md" style={{ border: "1px solid #e2e8f0" }}>
             <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>{q}</AccordionTrigger>
