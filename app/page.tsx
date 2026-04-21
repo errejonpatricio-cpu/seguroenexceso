@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion"
 import { GradientWave } from "@/components/ui/gradient-wave"
 import { Check, Monitor, Wifi, CreditCard, FileText, ShieldCheck, Calendar, Video, Receipt, Lightbulb } from "lucide-react"
+import posthog from "posthog-js"
 
 // Custom hook for intersection observer animations
 function useInView(options = {}) {
@@ -51,8 +52,25 @@ function AnimatedSection({ children, className = "", delay = 0 }: { children: Re
   )
 }
 
+const faqItems = [
+  { q: "Mi póliza de grupo ya tiene cláusula de conversión, ¿para qué necesito una póliza en exceso?", a: "La cláusula de conversión solo te permite salir del seguro colectivo y pasar a una póliza individual con los mismos términos y condiciones, es decir la misma suma asegurada. La póliza en exceso hace algo distinto: suma protección adicional hoy, mientras sigues en la empresa, y se convierte en tu póliza principal el día que la necesites." },
+  { q: "Mi póliza colectiva no es de MAPFRE, ¿aún así puedo contratar?", a: "Sí. La póliza en exceso funciona como complemento de cualquier seguro de grupo, sin importar qué aseguradora lo opera." },
+  { q: "¿Cuándo recibo mi póliza?", a: "En menos de 24 horas después de completar tu cotización y cuestionario médico — siempre que no se requieran estudios adicionales. Todo por correo electrónico." },
+  { q: "¿Cómo hago una reclamación con mi póliza en exceso?", a: "El proceso es en dos capas: primero se atiende el siniestro con tu seguro de empresa hasta su límite. Si el gasto lo supera, tu póliza en exceso se activa como segunda capa, siguiendo el procedimiento de reclamación de MAPFRE. EB&A te acompaña en cada paso." },
+  { q: "¿Qué pasa con mi antigüedad al salir de la empresa?", a: "Tu antigüedad se respeta desde hoy que contratas tu póliza en exceso. Solo necesitamos tu certificado de antigüedad actual para tramitarlo." },
+  { q: "¿Las preexistencias están cubiertas?", a: "No. Un padecimiento diagnosticado antes de contratar sigue siendo preexistencia y no está cubierto. Por eso el momento ideal para contratar es ahora, mientras estás sano: todo lo que aparezca después de la contratación se queda cubierto, ya sea dentro o fuera de tu póliza colectiva." },
+  { q: "¿EB&A es lo mismo que MAPFRE?", a: "No. EB&A es tu broker: te asesora, gestiona tu póliza y te acompaña en todo el proceso. MAPFRE es la aseguradora que emite y respalda tu póliza. Roles distintos, equipo completo." },
+  { q: "¿A quién pago las primas?", a: "El pago se realiza directamente a MAPFRE mediante sus conductos de cobro oficiales." },
+  { q: "¿Cuál es el mejor momento para contratar?", a: "Ahora. La póliza en exceso se contrata con salud, no cuando ya hay un diagnóstico. Entre más pronto la tengas, más completa y accesible es tu protección." },
+  { q: "¿Qué pasa si nunca la uso?", a: "Es como el cinturón de seguridad: esperas no necesitarlo nunca. Pero si algún día tu cuenta hospitalaria supera la suma asegurada de tu empresa, tu póliza en exceso protege tu patrimonio. Esa tranquilidad no tiene precio." },
+  { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo." },
+]
+
 export default function Home() {
-  const scrollToCalendly = () => {
+  const calendarSectionRef = useRef<HTMLElement>(null)
+
+  const scrollToCalendly = (source: string) => {
+    posthog.capture("schedule_appointment_clicked", { source })
     const el = document.getElementById("calendly")
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
@@ -117,16 +135,33 @@ export default function Home() {
   }, [])
 
   const scrollToCandidate = () => {
+    posthog.capture("learn_more_clicked")
     const el = document.getElementById("candidato")
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
+
+  useEffect(() => {
+    const section = calendarSectionRef.current
+    if (!section) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          posthog.capture("calendar_section_viewed")
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.2 }
+    )
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <main className="min-h-screen font-sans overflow-x-hidden">
 
       {/* FLOATING BUTTON */}
       <button
-        onClick={scrollToCalendly}
+        onClick={() => scrollToCalendly("floating_button")}
         className="fixed bottom-6 right-6 z-50 shadow-lg px-5 py-3 rounded-full text-white text-sm font-semibold transition-all hover:scale-105 hover:shadow-xl animate-pulse"
         style={{ backgroundColor: "#1565c0" }}
         aria-label="Agendar Cita"
@@ -165,7 +200,7 @@ export default function Home() {
             </h1>
             <div className="flex flex-wrap gap-4 mt-8 animate-slide-up" style={{ animationDelay: "0.4s" }}>
               <button
-                onClick={scrollToCalendly}
+                onClick={() => scrollToCalendly("hero_button")}
                 className="px-8 py-4 text-base font-semibold text-white rounded-lg transition-all hover:scale-105 hover:shadow-lg"
                 style={{ backgroundColor: "#1565c0" }}
               >
@@ -470,20 +505,21 @@ export default function Home() {
       <p className="mb-10 text-base" style={{ color: "#64748b" }}>Preguntas frecuentes sobre el Seguro en Exceso</p>
     </AnimatedSection>
     <AnimatedSection delay={100}>
-      <Accordion type="single" collapsible className="w-full space-y-3">
-        {[
-          { q: "Mi póliza de grupo ya tiene cláusula de conversión, ¿para qué necesito una póliza en exceso?", a: "La cláusula de conversión solo te permite salir del seguro colectivo y pasar a una póliza individual con los mismos términos y condiciones, es decir la misma suma asegurada. La póliza en exceso hace algo distinto: suma protección adicional hoy, mientras sigues en la empresa, y se convierte en tu póliza principal el día que la necesites." },
-          { q: "Mi póliza colectiva no es de MAPFRE, ¿aún así puedo contratar?", a: "Sí. La póliza en exceso funciona como complemento de cualquier seguro de grupo, sin importar qué aseguradora lo opera." },
-          { q: "¿Cuándo recibo mi póliza?", a: "En menos de 24 horas después de completar tu cotización y cuestionario médico — siempre que no se requieran estudios adicionales. Todo por correo electrónico." },
-          { q: "¿Cómo hago una reclamación con mi póliza en exceso?", a: "El proceso es en dos capas: primero se atiende el siniestro con tu seguro de empresa hasta su límite. Si el gasto lo supera, tu póliza en exceso se activa como segunda capa, siguiendo el procedimiento de reclamación de MAPFRE. EB&A te acompaña en cada paso." },
-          { q: "¿Qué pasa con mi antigüedad al salir de la empresa?", a: "Tu antigüedad se respeta desde hoy que contratas tu póliza en exceso. Solo necesitamos tu certificado de antigüedad actual para tramitarlo." },
-          { q: "¿Las preexistencias están cubiertas?", a: "No. Un padecimiento diagnosticado antes de contratar sigue siendo preexistencia y no está cubierto. Por eso el momento ideal para contratar es ahora, mientras estás sano: todo lo que aparezca después de la contratación se queda cubierto, ya sea dentro o fuera de tu póliza colectiva." },
-          { q: "¿EB&A es lo mismo que MAPFRE?", a: "No. EB&A es tu broker: te asesora, gestiona tu póliza y te acompaña en todo el proceso. MAPFRE es la aseguradora que emite y respalda tu póliza. Roles distintos, equipo completo." },
-          { q: "¿A quién pago las primas?", a: "El pago se realiza directamente a MAPFRE mediante sus conductos de cobro oficiales." },
-          { q: "¿Cuál es el mejor momento para contratar?", a: "Ahora. La póliza en exceso se contrata con salud, no cuando ya hay un diagnóstico. Entre más pronto la tengas, más completa y accesible es tu protección." },
-          { q: "¿Qué pasa si nunca la uso?", a: "Es como el cinturón de seguridad: esperas no necesitarlo nunca. Pero si algún día tu cuenta hospitalaria supera la suma asegurada de tu empresa, tu póliza en exceso protege tu patrimonio. Esa tranquilidad no tiene precio." },
-          { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo." },
-        ].map(({ q, a }, i) => (
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full space-y-3"
+        onValueChange={(value) => {
+          if (value) {
+            const index = parseInt(value.replace("item-", ""), 10)
+            posthog.capture("faq_item_opened", {
+              question_index: index,
+              question: faqItems[index]?.q,
+            })
+          }
+        }}
+      >
+        {faqItems.map(({ q, a }, i) => (
           <AccordionItem key={i} value={`item-${i}`} className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md" style={{ border: "1px solid #e2e8f0" }}>
             <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>{q}</AccordionTrigger>
             <AccordionContent className="text-sm leading-relaxed px-6 pb-4" style={{ color: "#475569" }}>{a}</AccordionContent>
@@ -495,7 +531,7 @@ export default function Home() {
 </section>
 
       {/* SECTION 10 — CAL.COM */}
-      <section id="calendly" style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
+      <section ref={calendarSectionRef} id="calendly" style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <AnimatedSection>
@@ -550,7 +586,11 @@ export default function Home() {
               <p>Tel: 442 295 3699</p>
             </div>
             <div className="text-sm" style={{ color: "#bfdbfe" }}>
-              <a href="mailto:seguros@ebya.mx" className="hover:text-white transition-colors">seguros@ebya.mx</a>
+              <a
+                href="mailto:seguros@ebya.mx"
+                className="hover:text-white transition-colors"
+                onClick={() => posthog.capture("contact_email_clicked", { email: "seguros@ebya.mx" })}
+              >seguros@ebya.mx</a>
               <p className="mt-4"><a href="#" className="hover:text-white transition-colors">Aviso de Privacidad</a></p>
             </div>
           </div>
