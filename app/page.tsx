@@ -8,8 +8,23 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { GradientWave } from "@/components/ui/gradient-wave"
-import { Check, Monitor, Wifi, CreditCard, FileText, ShieldCheck, Calendar, Video, Receipt, Lightbulb } from "lucide-react"
+import {
+  Check,
+  Monitor,
+  Wifi,
+  CreditCard,
+  FileText,
+  ShieldCheck,
+  Calendar,
+  Video,
+  Receipt,
+  Lightbulb,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+} from "lucide-react"
 import posthog from "posthog-js"
+
 
 // Custom hook for intersection observer animations
 function useInView(options = {}) {
@@ -33,6 +48,7 @@ function useInView(options = {}) {
   return { ref, isInView }
 }
 
+
 // Animated section wrapper
 function AnimatedSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const { ref, isInView } = useInView()
@@ -52,6 +68,7 @@ function AnimatedSection({ children, className = "", delay = 0 }: { children: Re
   )
 }
 
+
 const faqItems = [
   { q: "Mi póliza de grupo ya tiene cláusula de conversión, ¿para qué necesito una póliza en exceso?", a: "La cláusula de conversión solo te permite salir del seguro colectivo y pasar a una póliza individual con los mismos términos y condiciones, es decir la misma suma asegurada. La póliza en exceso hace algo distinto: suma protección adicional hoy, mientras sigues en la empresa, y se convierte en tu póliza principal el día que la necesites." },
   { q: "Mi póliza colectiva no es de MAPFRE, ¿aún así puedo contratar?", a: "Sí. La póliza en exceso funciona como complemento de cualquier seguro de grupo, sin importar qué aseguradora lo opera." },
@@ -66,12 +83,206 @@ const faqItems = [
   { q: "¿Qué pasa si mi empresa cambia de aseguradora o Suma Asegurada?", a: "Si tu Suma Asegurada cambia, tu póliza en exceso deberá actualizarse para reflejar los nuevos términos. Si solo cambia la aseguradora, tu póliza en exceso sigue operando normalmente. Recuerda que tu deducible debe ser igual a tu Suma Asegurada de grupo." },
 ]
 
+// VIDEOS INFORMATIVOS — SELF-HOSTED
+
+const videos = [
+  {
+    id: 1,
+    title: "¿Qué es el Seguro en Exceso?",
+    description: "Descubre cómo esta póliza complementa tu seguro de empresa.",
+    src: "/videos/seguro-en-exceso-1.mp4",
+    poster: "/videos/seguro-en-exceso-1.png",
+    items: [
+      { id: 1, text: "Cobertura de bajo costo" },
+      { id: 2, text: "100% en línea" },
+      { id: 3, text: "Protección de por vida" },
+      { id: 4, text: "Suma asegurada millonaria" },
+    ],
+  },
+  {
+    id: 2,
+    title: "Protege tu patrimonio",
+    description: "Una red de seguridad automática ante gastos hospitalarios costosos.",
+    src: "/videos/seguro-en-exceso-2.mp4",
+    poster: "/videos/seguro-en-exceso-2.png",
+    items: [
+      { id: 1, text: "Respaldo económico automático" },
+      { id: 2, text: "Cobertura hasta 130 millones" },
+      { id: 3, text: "Mismo deducible" },
+      { id: 4, text: "Personaliza tu plan" },
+    ],
+  },
+  {
+    id: 3,
+    title: "Asegura tu futuro médico",
+    description: "Mantén tu protección intacta, sin importar dónde trabajes mañana.",
+    src: "/videos/seguro-en-exceso-3.mp4",
+    poster: "/videos/seguro-en-exceso-3.png",
+    items: [
+      { id: 1, text: "Derecho a estar asegurado" },
+      { id: 2, text: "Cobertura fuera de la empresa" },
+      { id: 3, text: "Respeta padecimientos futuros" },
+      { id: 4, text: "Tu antigüedad se queda" },
+    ],
+  },
+  {
+    id: 4,
+    title: "Contratación 100% digital",
+    description: "Obtén los beneficios de un seguro tradicional a un costo mínimo.",
+    src: "/videos/seguro-en-exceso-4.mp4",
+    poster: "/videos/seguro-en-exceso-4.png",
+    items: [
+      { id: 1, text: "Costo accesible" },
+      { id: 2, text: "Contratación en minutos" },
+      { id: 3, text: "Póliza en 24 horas" },
+      { id: 4, text: "Sin exámenes médicos" },
+    ],
+  },
+]
+
+function VideoCarousel() {
+  const [current, setCurrent] = useState(0)
+
+  const prev = () => setCurrent((c) => (c - 1 + videos.length) % videos.length)
+  const next = () => setCurrent((c) => (c + 1) % videos.length)
+
+  const video = videos[current]
+
+  return (
+    <section id="videos" style={{ backgroundColor: "#f8fafc" }} className="px-6 py-16 md:px-12 md:py-24">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-widest mb-3 font-semibold" style={{ color: "#1565c0" }}>
+              Aprende más
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance" style={{ color: "#0a1a3a" }}>
+              Videos informativos
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={150}>
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-2 mb-6">
+            {videos.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                aria-label={`Ir al video ${i + 1}`}
+                className="transition-all duration-300 focus:outline-none rounded-full"
+                style={{
+                  backgroundColor: i === current ? "#1565c0" : "#cbd5e1",
+                  width: i === current ? "24px" : "8px",
+                  height: "8px",
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Card + arrows wrapper */}
+          <div className="flex items-center gap-3 md:gap-5">
+            {/* Left arrow */}
+            <button
+              onClick={prev}
+              aria-label="Video anterior"
+              className="flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              style={{ backgroundColor: "#ffffff", border: "1px solid #e2e8f0", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+            >
+              <ChevronLeft className="w-5 h-5" style={{ color: "#0a1a3a" }} />
+            </button>
+
+            {/* Card */}
+            <div className="flex-1">
+              <VideoCard
+                title={video.title}
+                description={video.description}
+                items={video.items}
+                src={video.src}
+                poster={video.poster}
+              />
+            </div>
+
+            {/* Right arrow */}
+            <button
+              onClick={next}
+              aria-label="Siguiente video"
+              className="flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              style={{ backgroundColor: "#ffffff", border: "1px solid #e2e8f0", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+            >
+              <ChevronRight className="w-5 h-5" style={{ color: "#0a1a3a" }} />
+            </button>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  )
+}
+
+interface VideoCardProps {
+  title: string
+  description: string
+  items: { id: number; text: string }[]
+  src: string
+  poster: string
+}
+
+function VideoCard({ title, description, items, src, poster }: VideoCardProps) {
+  return (
+    <div
+      className="w-full bg-white rounded-2xl shadow-md overflow-hidden"
+      style={{ border: "1px solid #e2e8f0" }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+        {/* Left: info + checklist */}
+        <div className="flex flex-col p-8">
+          <h3 className="text-2xl font-bold tracking-tight" style={{ color: "#0a1a3a" }}>
+            {title}
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed" style={{ color: "#64748b" }}>
+            {description}
+          </p>
+          <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+            {items.map((item) => (
+              <li key={item.id} className="flex items-start gap-2">
+                <CheckCircle2 className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: "#10b981" }} />
+                <span className="text-sm font-medium" style={{ color: "#0a1a3a" }}>{item.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right: video */}
+        <div className="relative flex items-center justify-center bg-black" style={{ minHeight: "260px" }}>
+          <video
+            src={src}
+            controls
+            className="w-full h-full object-contain"
+            style={{ maxHeight: "320px" }}
+            poster={poster}
+          >
+            Tu navegador no soporta video.
+          </video>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
 export default function Home() {
   const calendarSectionRef = useRef<HTMLElement>(null)
 
   const scrollToCalendly = (source: string) => {
     posthog.capture("schedule_appointment_clicked", { source })
     const el = document.getElementById("calendly")
+    if (el) el.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const scrollToVideos = () => {
+    posthog.capture("learn_more_clicked", { target: "videos" })
+    const el = document.getElementById("videos")
     if (el) el.scrollIntoView({ behavior: "smooth" })
   }
 
@@ -134,12 +345,6 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [])
 
-  const scrollToCandidate = () => {
-    posthog.capture("learn_more_clicked")
-    const el = document.getElementById("candidato")
-    if (el) el.scrollIntoView({ behavior: "smooth" })
-  }
-
   useEffect(() => {
     const section = calendarSectionRef.current
     if (!section) return
@@ -158,7 +363,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen font-sans overflow-x-hidden">
-
       {/* FLOATING BUTTON */}
       <button
         onClick={() => scrollToCalendly("floating_button")}
@@ -207,7 +411,7 @@ export default function Home() {
                 Agendar Cita
               </button>
               <button
-                onClick={scrollToCandidate}
+                onClick={scrollToVideos}
                 className="px-8 py-4 text-base font-medium rounded-lg transition-all hover:bg-white/20"
                 style={{ color: "#bfdbfe", border: "1px solid rgba(191,219,254,0.3)" }}
               >
@@ -247,7 +451,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2 — ¿ERES CANDIDATO? */}
+      {/* SECTION 2 — VIDEOS INFORMATIVOS */}
+      <VideoCarousel />
+
+      {/* SECTION 3 — ¿ERES CANDIDATO? */}
       <section id="candidato" style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-4xl mx-auto">
           <AnimatedSection>
@@ -277,7 +484,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 3 — ¿QUIÉNES PUEDEN CONTRATAR? */}
+      {/* SECTION 4 — ¿QUIÉNES PUEDEN CONTRATAR? */}
       <section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-20">
         <div className="max-w-4xl mx-auto">
           <AnimatedSection>
@@ -289,7 +496,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 4 — COBERTURAS */}
+      {/* SECTION 5 — COBERTURAS */}
       <section style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection>
@@ -369,7 +576,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 5 — MAPFRE */}
+      {/* SECTION 6 — MAPFRE */}
       <section style={{ backgroundColor: "#0a1a3a" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection>
@@ -396,7 +603,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 6 — EB&A */}
+      {/* SECTION 7 — EB&A */}
       <section style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection>
@@ -425,7 +632,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 7 — PROCESO DE LA CITA */}
+      {/* SECTION 8 — PROCESO DE LA CITA */}
       <section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection>
@@ -469,7 +676,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 8 — REQUISITOS PARA LA CITA */}
+      {/* SECTION 9 — REQUISITOS PARA LA CITA */}
       <section style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-4xl mx-auto">
           <AnimatedSection>
@@ -497,40 +704,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 9 — FAQ */}
-<section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-24">
-  <div className="max-w-4xl mx-auto">
-    <AnimatedSection>
-      <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#0a1a3a" }}>FAQ</h2>
-      <p className="mb-10 text-base" style={{ color: "#64748b" }}>Preguntas frecuentes sobre el Seguro en Exceso</p>
-    </AnimatedSection>
-    <AnimatedSection delay={100}>
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full space-y-3"
-        onValueChange={(value) => {
-          if (value) {
-            const index = parseInt(value.replace("item-", ""), 10)
-            posthog.capture("faq_item_opened", {
-              question_index: index,
-              question: faqItems[index]?.q,
-            })
-          }
-        }}
-      >
-        {faqItems.map(({ q, a }, i) => (
-          <AccordionItem key={i} value={`item-${i}`} className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md" style={{ border: "1px solid #e2e8f0" }}>
-            <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>{q}</AccordionTrigger>
-            <AccordionContent className="text-sm leading-relaxed px-6 pb-4" style={{ color: "#475569" }}>{a}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </AnimatedSection>
-  </div>
-</section>
+      {/* SECTION 10 — FAQ */}
+      <section style={{ backgroundColor: "#f1f5f9" }} className="px-6 py-16 md:px-12 md:py-24">
+        <div className="max-w-4xl mx-auto">
+          <AnimatedSection>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: "#0a1a3a" }}>FAQ</h2>
+            <p className="mb-10 text-base" style={{ color: "#64748b" }}>Preguntas frecuentes sobre el Seguro en Exceso</p>
+          </AnimatedSection>
+          <AnimatedSection delay={100}>
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full space-y-3"
+              onValueChange={(value) => {
+                if (value) {
+                  const index = parseInt(value.replace("item-", ""), 10)
+                  posthog.capture("faq_item_opened", {
+                    question_index: index,
+                    question: faqItems[index]?.q,
+                  })
+                }
+              }}
+            >
+              {faqItems.map(({ q, a }, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`item-${i}`}
+                  className="rounded-xl overflow-hidden bg-white transition-all hover:shadow-md"
+                  style={{ border: "1px solid #e2e8f0" }}
+                >
+                  <AccordionTrigger className="text-left text-base font-medium px-6 py-4 hover:no-underline" style={{ color: "#0a1a3a" }}>
+                    {q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm leading-relaxed px-6 pb-4" style={{ color: "#475569" }}>
+                    {a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </AnimatedSection>
+        </div>
+      </section>
 
-      {/* SECTION 10 — CAL.COM */}
+      {/* SECTION 11 — CAL.COM */}
       <section ref={calendarSectionRef} id="calendly" style={{ backgroundColor: "#ffffff" }} className="px-6 py-16 md:px-12 md:py-24">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -555,7 +771,7 @@ export default function Home() {
                   backgroundColor: "#ffffff",
                   border: "1px solid #e2e8f0",
                   minHeight: "600px",
-                  boxShadow: "0 4px 24px rgba(0,46,111,0.08)"
+                  boxShadow: "0 4px 24px rgba(0,46,111,0.08)",
                 }}
               >
                 {/* Cal.com inline embed — cotizacion-seguro-en-exceso */}
@@ -590,8 +806,14 @@ export default function Home() {
                 href="mailto:seguros@ebya.mx"
                 className="hover:text-white transition-colors"
                 onClick={() => posthog.capture("contact_email_clicked", { email: "seguros@ebya.mx" })}
-              >seguros@ebya.mx</a>
-              <p className="mt-4"><a href="#" className="hover:text-white transition-colors">Aviso de Privacidad</a></p>
+              >
+                seguros@ebya.mx
+              </a>
+              <p className="mt-4">
+                <a href="#" className="hover:text-white transition-colors">
+                  Aviso de Privacidad
+                </a>
+              </p>
             </div>
           </div>
           <div className="mt-10 pt-8 text-center text-xs" style={{ borderTop: "1px solid rgba(255,255,255,0.1)", color: "#64748b" }}>
