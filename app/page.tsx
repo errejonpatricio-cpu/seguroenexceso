@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { GradientWave } from "@/components/ui/gradient-wave"
+import { CotizadorExceso } from "@/components/cotizador-exceso"
 import {
   Check,
   Monitor,
@@ -461,10 +462,8 @@ export default function Home() {
       </button>
 
       {/* SECTION 1 — HERO */}
-      <section
-        className="relative overflow-hidden min-h-screen flex flex-col"
-        style={{ backgroundColor: "#0a1a3a" }}
-      >
+      <section className="relative overflow-hidden min-h-screen flex flex-col" style={{ backgroundColor: "#0a1a3a" }}>
+        {/* Animated gradient background */}
         <GradientWave
           colors={["#0a1a3a", "#0d2a5c", "#1565c0", "#0a2040", "#0a1a3a"]}
           shadowPower={4}
@@ -472,6 +471,8 @@ export default function Home() {
           noiseFrequency={[0.0001, 0.0002]}
           deform={{ incline: 0.15, noiseAmp: 120, noiseFlow: 1.5 }}
         />
+
+        {/* Navbar */}
         <nav className="relative z-10 px-6 py-5 md:px-12 flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
             <img
@@ -482,37 +483,40 @@ export default function Home() {
           </div>
         </nav>
 
+        {/* Hero Content */}
         <div className="relative z-10 flex-1 flex flex-col md:flex-row items-center px-6 md:px-12 pb-16 gap-12">
+          {/* Left side - Text */}
           <div className="flex-1 flex flex-col justify-center pt-8 md:pt-0">
-            <div
-              className="flex justify-center mb-6 animate-fade-in"
-              style={{ animationDelay: "0.15s" }}
-            >
-              <span
-                className="text-xs px-3 py-1 rounded-full text-white/80"
-                style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-              >
+            {/* Beneficio badge */}
+            <div className="flex justify-center mb-6 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+              <span className="text-xs px-3 py-1 rounded-full text-white/80" style={{ backgroundColor: "rgba(255,255,255,0.1)" }}>
                 Beneficio para Colaboradores
               </span>
             </div>
+
             <p
               className="text-2xl uppercase tracking-widest mb-4 animate-slide-up font-semibold"
               style={{ color: "#60a5fa", animationDelay: "0.2s" }}
             >
               Seguro en Exceso
             </p>
+
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white text-balance mb-6 animate-slide-up"
-              style={{ animationDelay: "0.3s" }}
+              className="font-bold leading-tight text-white text-balance mb-6 animate-slide-up"
+              style={{ fontSize: "41px", animationDelay: "0.3s" }}
             >
-              Ya conoces el seguro.
-              <br />
-              <span style={{ color: "#60a5fa" }}>Es momento de protegerte.</span>
+              Tu seguro de empresa tiene un límite.<br />
+              <span style={{ color: "#60a5fa" }}>El Seguro en Exceso cubre lo que no alcanza.</span>
             </h1>
-            <div
-              className="flex flex-wrap gap-4 mt-8 animate-slide-up"
-              style={{ animationDelay: "0.4s" }}
+
+            <p
+              className="text-white/90 text-balance mb-8 animate-slide-up leading-relaxed"
+              style={{ fontSize: "18px", animationDelay: "0.35s" }}
             >
+              Complementa tu póliza colectiva con hasta 130 millones de pesos de cobertura adicional respaldada por MAPFRE.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mt-8 animate-slide-up" style={{ animationDelay: "0.4s" }}>
               <button
                 onClick={() => scrollToCalendly("hero_button")}
                 className="px-8 py-4 text-base font-semibold text-white rounded-lg transition-all hover:scale-105 hover:shadow-lg"
@@ -521,74 +525,21 @@ export default function Home() {
                 Agendar Cita
               </button>
               <button
-                onClick={scrollToVideos}
-                className="px-8 py-4 text-base font-medium rounded-lg transition-all hover:bg-white/20"
-                style={{
-                  color: "#bfdbfe",
-                  border: "1px solid rgba(191,219,254,0.3)",
+                onClick={() => {
+                  const el = document.getElementById("candidato")
+                  if (el) el.scrollIntoView({ behavior: "smooth" })
                 }}
+                className="px-8 py-4 text-base font-medium rounded-lg transition-all hover:bg-white/20"
+                style={{ color: "#bfdbfe", border: "1px solid rgba(191,219,254,0.3)" }}
               >
                 Saber más
               </button>
             </div>
           </div>
 
-          <div
-            className="flex-1 flex items-center justify-center animate-fade-in"
-            style={{ animationDelay: "0.5s" }}
-          >
-            <div className="relative w-full max-w-md aspect-square">
-              <div
-                className="w-full h-full rounded-3xl overflow-hidden"
-                style={{
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  boxShadow: "0 24px 64px rgba(0,0,0,0.3)",
-                }}
-              >
-                <img
-                  src="/images/family-hero.png"
-                  alt="Padre jugando con su hijo - Familia protegida"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-10">
-                {[
-                  { value: "100%", label: "en línea" },
-                  { value: "30", label: "minutos" },
-                  { value: "24hrs", label: "Póliza en" },
-                ].map(({ value, label }, i) => (
-                  <div
-                    key={i}
-                    className="flex-1 flex flex-col items-center justify-center py-4 px-3 rounded-2xl backdrop-blur-lg"
-                    style={{
-                      backgroundColor: "rgba(45, 65, 100, 0.5)",
-                      border: "1px solid rgba(255,255,255,0.25)",
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    {i === 2 ? (
-                      <>
-                        <span className="text-sm text-white/90 font-medium">
-                          {label}
-                        </span>
-                        <span className="text-2xl md:text-3xl font-extrabold text-white leading-none mt-1">
-                          {value}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="text-2xl md:text-3xl font-extrabold text-white leading-none">
-                          {value}
-                        </span>
-                        <span className="text-sm mt-1 text-white/90 font-medium">
-                          {label}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Right side - Cotizador */}
+          <div className="flex-1 flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.5s" }}>
+            <CotizadorExceso />
           </div>
         </div>
       </section>
@@ -1395,5 +1346,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
+    
   )
 }
