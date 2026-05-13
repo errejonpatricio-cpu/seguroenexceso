@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Instrument_Serif, Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Providers } from "./providers"
 import "./globals.css"
 
 const instrumentSerif = Instrument_Serif({
@@ -30,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.variable} ${instrumentSerif.variable} font-sans antialiased`}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         <Analytics />
         <SpeedInsights />
       </body>
