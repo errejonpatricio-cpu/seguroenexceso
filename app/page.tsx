@@ -25,6 +25,7 @@ import {
   CheckCircle2,
 } from "lucide-react"
 import posthog from "posthog-js"
+import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button"
 
 // Custom hook for intersection observer animations
 function useInView(options = {}) {
@@ -461,6 +462,11 @@ export default function Home() {
         Agendar Cita
       </button>
 
+      <WhatsAppFloatingButton
+        phoneNumber="525517063317"
+        message="Hola, me interesa conocer más sobre el Seguro en Exceso."
+      />
+
       {/* SECTION 1 — HERO */}
       <section className="relative overflow-hidden min-h-screen flex flex-col" style={{ backgroundColor: "#0a1a3a" }}>
         {/* Animated gradient background */}
@@ -484,7 +490,7 @@ export default function Home() {
         </nav>
 
         {/* Hero Content */}
-        <div className="relative z-10 flex-1 flex flex-col md:flex-row items-center px-6 md:px-12 pb-16 gap-12">
+        <div className="relative z-10 flex-1 flex flex-col md:flex-row items-center px-6 md:px-12 pb-16 gap-2">
           {/* Left side - Text */}
           <div className="flex-1 flex flex-col justify-center pt-8 md:pt-0">
             {/* Beneficio badge */}
